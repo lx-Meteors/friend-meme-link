@@ -1,0 +1,9 @@
+{
+  "name": "meme-link-friends",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check game.js && node --check server.js"
+  }
+}

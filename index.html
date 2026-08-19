@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#ffe43d">
+  <title>朋友表情包连连看</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="game-frame">
+    <section id="introScreen" class="screen intro-screen active">
+      <div class="top-stamp">FRIEND MEME LAB · 01</div>
+      <div class="hero-copy">
+        <span class="burst">限时！</span>
+        <h1><em>朋友</em><br>表情包<br><strong>连连看</strong></h1>
+        <p>把朋友做成梗图，找到相同表情包，用不超过两次转弯的路线消除。</p>
+      </div>
+
+      <div class="photo-panel">
+        <div id="photoPreview" class="photo-preview"></div>
+        <label class="upload-button" for="photoInput"><b>＋</b> 选择 2–8 张朋友照片</label>
+        <input id="photoInput" type="file" accept="image/*" multiple hidden>
+        <small><i></i>照片只在当前浏览器本地处理</small>
+      </div>
+
+      <div class="rule-strip">
+        <span><b>01</b> 相同梗图</span>
+        <span><b>02</b> 最多两拐</span>
+        <span><b>03</b> 全部消除</span>
+      </div>
+      <button id="startButton" class="big-button" type="button">开始整活 <span>→</span></button>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen">
+      <header class="game-header">
+        <button id="backButton" class="round-button" type="button" aria-label="返回">←</button>
+        <div class="score-block"><small>SCORE</small><b id="scoreValue">0000</b></div>
+        <div class="combo-block"><small>COMBO</small><b id="comboValue">×1</b></div>
+        <div class="time-block"><small>TIME</small><b id="timeValue">75</b></div>
+      </header>
+      <div class="timer"><span id="timerFill"></span></div>
+      <div class="mission-line"><span id="remainingValue">剩余 18 对</span><strong id="statusText">找出两个相同梗图！</strong></div>
+
+      <div id="boardWrap" class="board-wrap">
+        <div id="board" class="board" aria-label="连连看棋盘"></div>
+        <svg id="linkLayer" class="link-layer" aria-hidden="true"></svg>
+        <div id="toast" class="toast">连上啦！</div>
+      </div>
+
+      <div class="tools">
+        <button id="hintButton" type="button"><span>💡</span><b>提示</b><small id="hintCount">3 次</small></button>
+        <button id="shuffleButton" type="button"><span>🔀</span><b>洗牌</b><small id="shuffleCount">3 次</small></button>
+        <button id="pauseButton" type="button"><span>⏸</span><b>暂停</b><small>喘口气</small></button>
+      </div>
+      <div id="pauseCurtain" class="pause-curtain" hidden><span>😴</span><h2>暂停整活</h2><button id="resumeButton" type="button">继续游戏</button></div>
+    </section>
+
+    <section id="resultScreen" class="screen result-screen">
+      <div class="result-card">
+        <span class="tape"></span>
+        <p id="resultEmoji" class="result-emoji">🏆</p>
+        <p class="result-kicker">本局鉴定结果</p>
+        <h2 id="resultTitle">整活大师！</h2>
+        <div id="resultFaces" class="result-faces"></div>
+        <strong id="resultScore">0000</strong>
+        <p id="resultDetail">18 对全部消除 · 最高连击 ×1</p>
+      </div>
+      <button id="againButton" class="big-button dark" type="button">再整一次 <span>↻</span></button>
+      <button id="homeButton" class="text-button" type="button">重新选择照片</button>
+    </section>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
