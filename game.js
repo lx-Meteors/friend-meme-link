@@ -298,8 +298,8 @@ function updateHud() {
   $('#scoreValue').textContent = String(state.score).padStart(4,'0');
   $('#comboValue').textContent = `×${Math.max(1,state.combo)}`;
   $('#remainingValue').textContent = `第 ${state.round + 1}/3 轮 · 剩余 ${state.remainingPairs} 对`;
-  $('#hintCount').textContent = `${state.hints} 次`;
-  $('#shuffleCount').textContent = `${state.shuffles} 次`;
+  $('#hintCount').textContent = `剩 ${state.hints} 次`;
+  $('#shuffleCount').textContent = `剩 ${state.shuffles} 次`;
   $('#hintButton').disabled = state.hints <= 0;
   $('#shuffleButton').disabled = state.shuffles <= 0;
 }

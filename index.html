@@ -10,34 +10,35 @@
 <body>
   <main class="game-frame">
     <section id="introScreen" class="screen intro-screen active">
-      <div class="top-stamp">FRIEND MEME LAB · 01</div>
+      <div class="top-stamp"><span>朋友表情加工厂</span><b>第 001 号实验</b></div>
       <div class="hero-copy">
-        <span class="burst">限时！</span>
-        <h1><em>朋友</em><br>表情包<br><strong>连连看</strong></h1>
-        <p>45 秒闯过三轮表情包派对。配对成功就放大朋友丑照，还会触发炸弹和时间奖励。</p>
+        <span class="burst">爆笑<br>开连</span>
+        <span class="scribble">照片禁止正经使用</span>
+        <h1><small>朋友被做成</small><em>表情包</em><strong>连连看<i>!</i></strong></h1>
+        <p><b>45 秒，三轮。</b>认准同一张脸，连上就公开处刑。</p>
       </div>
 
       <div class="photo-panel">
         <div id="photoPreview" class="photo-preview"></div>
-        <label class="upload-button" for="photoInput"><b>＋</b> 选择 2–8 张朋友照片</label>
+        <label class="upload-button" for="photoInput"><b>＋</b> 把 2–8 个朋友丢进来</label>
         <input id="photoInput" type="file" accept="image/*" multiple hidden>
         <small><i></i>照片只在当前浏览器本地处理</small>
       </div>
 
       <div class="rule-strip">
-        <span><b>01</b> 相同梗图</span>
-        <span><b>02</b> 最多两拐</span>
-        <span><b>03</b> 三轮整活</span>
+        <span><b>同脸</b> 就点</span>
+        <span><b>两拐</b> 能连</span>
+        <span><b>三轮</b> 处刑</span>
       </div>
-      <button id="startButton" class="big-button" type="button">开始整活 <span>→</span></button>
+      <button id="startButton" class="big-button" type="button"><i>READY?</i> 开！整！ <span>→</span></button>
     </section>
 
     <section id="gameScreen" class="screen game-screen">
       <header class="game-header">
         <button id="backButton" class="round-button" type="button" aria-label="返回">←</button>
-        <div class="score-block"><small>SCORE</small><b id="scoreValue">0000</b></div>
-        <div class="combo-block"><small>COMBO</small><b id="comboValue">×1</b></div>
-        <div class="time-block"><small>TIME</small><b id="timeValue">45</b></div>
+        <div class="score-block"><small>整活分</small><b id="scoreValue">0000</b></div>
+        <div class="combo-block"><small>手感</small><b id="comboValue">×1</b></div>
+        <div class="time-block"><small>还剩</small><b id="timeValue">45</b><i>秒</i></div>
       </header>
       <div class="timer"><span id="timerFill"></span></div>
       <div class="mission-line"><span id="remainingValue">第 1/3 轮 · 剩余 8 对</span><strong id="statusText">相同照片一定能配对！</strong></div>
@@ -50,9 +51,9 @@
       </div>
 
       <div class="tools">
-        <button id="hintButton" type="button"><span>💡</span><b>提示</b><small id="hintCount">3 次</small></button>
-        <button id="shuffleButton" type="button"><span>🔀</span><b>洗牌</b><small id="shuffleCount">3 次</small></button>
-        <button id="pauseButton" type="button"><span>⏸</span><b>暂停</b><small>喘口气</small></button>
+        <button id="hintButton" type="button"><span>💡</span><b>偷看一眼</b><small id="hintCount">剩 3 次</small></button>
+        <button id="shuffleButton" type="button"><span>🔀</span><b>打乱现场</b><small id="shuffleCount">剩 3 次</small></button>
+        <button id="pauseButton" type="button"><span>⏸</span><b>先喘口气</b><small>随时继续</small></button>
       </div>
       <div id="pauseCurtain" class="pause-curtain" hidden><span>😴</span><h2>暂停整活</h2><button id="resumeButton" type="button">继续游戏</button></div>
     </section>
@@ -60,15 +61,16 @@
     <section id="resultScreen" class="screen result-screen">
       <div class="result-card">
         <span class="tape"></span>
+        <span class="result-sticker">朋友鉴定报告</span>
         <p id="resultEmoji" class="result-emoji">🏆</p>
-        <p class="result-kicker">本局鉴定结果</p>
+        <p class="result-kicker">本 局 最 离 谱</p>
         <h2 id="resultTitle">整活大师！</h2>
         <div id="resultFaces" class="result-faces"></div>
-        <strong id="resultScore">0000</strong>
+        <div class="result-score-wrap"><small>整活指数</small><strong id="resultScore">0000</strong><i>PTS</i></div>
         <p id="resultDetail">33 对全部消除 · 最高连击 ×1</p>
       </div>
-      <button id="againButton" class="big-button dark" type="button">再整一次 <span>↻</span></button>
-      <button id="homeButton" class="text-button" type="button">重新选择照片</button>
+      <button id="againButton" class="big-button dark" type="button"><i>ONE MORE!</i> 再整一次 <span>↻</span></button>
+      <button id="homeButton" class="text-button" type="button">换一批朋友继续祸害</button>
     </section>
   </main>
   <script src="game.js"></script>
