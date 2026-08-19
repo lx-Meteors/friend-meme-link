@@ -1,12 +1,13 @@
 const $ = (selector) => document.querySelector(selector);
-const ROWS = 6;
-const COLS = 6;
-const TOTAL_SECONDS = 75;
+let ROWS = 4;
+let COLS = 4;
+const TOTAL_SECONDS = 45;
+const rounds = [{rows:4,cols:4,pairs:8},{rows:4,cols:5,pairs:10},{rows:5,cols:6,pairs:15}];
 const captions = ['我裂开了','你礼貌吗','让我康康','就这？','退退退！','拿来吧你','栓Q了','尊嘟假嘟','别卷了','已老实','好好好','我不理解','笑不活了','危！','开摆！','听我解释','问题不大','人麻了'];
 
 const state = {
   photos: [], board: [], selected: null, score: 0, combo: 0, maxCombo: 0,
-  remainingPairs: 18, hints: 3, shuffles: 3, seconds: TOTAL_SECONDS,
+  remainingPairs: 8, matchedPairs: 0, round: 0, hints: 3, shuffles: 3, seconds: TOTAL_SECONDS,
   timer: null, startedAt: 0, pausedAt: 0, pausedTotal: 0, paused: false, finished: false
 };
 
@@ -45,28 +46,42 @@ function shuffle(array) {
   return array;
 }
 
-function buildTiles() {
+function buildTiles(pairCount) {
   const pool = photos();
-  const pairs = captions.map((caption, index) => ({
-    key:`meme-${index}`, caption, photo:pool[index % pool.length], hue:(index * 47) % 360
+  const selectedCaptions = shuffle([...captions]).slice(0,pairCount);
+  const pairs = selectedCaptions.map((caption, index) => ({
+    key:`round-${state.round}-meme-${index}`, caption, photo:pool[(index + state.round) % pool.length], hue:(index * 47 + state.round * 35) % 360,
+    power:index === 1 ? 'time' : index === Math.floor(pairCount * .65) ? 'bomb' : null
   }));
   return shuffle(pairs.flatMap((pair) => [{...pair,uid:`${pair.key}-a`},{...pair,uid:`${pair.key}-b`} ]));
 }
 
 function resetGame() {
   clearInterval(state.timer);
-  Object.assign(state, { board:[], selected:null, score:0, combo:0, maxCombo:0, remainingPairs:18, hints:3, shuffles:3, seconds:TOTAL_SECONDS, pausedAt:0, pausedTotal:0, paused:false, finished:false });
-  const tiles = buildTiles();
+  Object.assign(state, { board:[], selected:null, score:0, combo:0, maxCombo:0, remainingPairs:8, matchedPairs:0, round:0, hints:3, shuffles:3, seconds:TOTAL_SECONDS, pausedAt:0, pausedTotal:0, paused:false, finished:false });
+  buildRound();
+  $('#timerFill').style.transform = 'scaleX(1)';
+  $('#pauseCurtain').hidden = true;
+}
+
+function buildRound() {
+  const config = rounds[state.round];
+  ROWS = config.rows; COLS = config.cols; state.remainingPairs = config.pairs; state.selected = null;
+  const tiles = buildTiles(config.pairs);
+  state.board = [];
   for (let row = 0; row < ROWS; row += 1) state.board.push(tiles.slice(row * COLS, (row + 1) * COLS));
   ensureMove();
   renderBoard(); updateHud();
-  $('#timerFill').style.transform = 'scaleX(1)';
-  $('#pauseCurtain').hidden = true;
+  $('#board').classList.remove('round-in'); void $('#board').offsetWidth; $('#board').classList.add('round-in');
+  setStatus(state.round === 0 ? '热身局：先找相邻的！' : state.round === 1 ? '加速局：棋盘变宽了！' : '最终局：表情包大爆发！');
+  showToast(`第 ${state.round + 1} 轮！`);
 }
 
 function renderBoard() {
   const board = $('#board');
   board.replaceChildren();
+  board.style.gridTemplateColumns = `repeat(${COLS},1fr)`;
+  board.style.gridTemplateRows = `repeat(${ROWS},1fr)`;
   state.board.forEach((row, rowIndex) => row.forEach((tile, colIndex) => {
     const cell = document.createElement('button');
     cell.type = 'button';
@@ -108,17 +123,42 @@ function selectTile(row, col, element) {
   drawPath(path);
   state.combo += 1; state.maxCombo = Math.max(state.maxCombo, state.combo);
   state.score += 100 + Math.min(8, state.combo - 1) * 25;
-  state.remainingPairs -= 1;
+  state.remainingPairs -= 1; state.matchedPairs += 1;
+  showMemeBurst(secondTile);
   showToast(state.combo >= 3 ? `${state.combo} 连击！` : '连上啦！');
   setStatus(state.combo >= 3 ? `手感火热 · ${state.combo} 连击` : '漂亮！继续找');
   firstElement?.classList.add('removing'); element.classList.add('removing');
   state.selected = null; updateHud();
   setTimeout(() => {
     state.board[first.row][first.col] = null; state.board[row][col] = null;
+    if (secondTile.power === 'time') { state.pausedTotal += 3000; state.score += 150; showToast('+3 秒！'); }
+    if (secondTile.power === 'bomb') blastOnePair();
     renderBoard(); clearPath();
-    if (state.remainingPairs === 0) finish(true);
+    if (state.remainingPairs === 0) {
+      if (state.round < rounds.length - 1) { state.round += 1; state.pausedTotal += 4000; setTimeout(buildRound,450); }
+      else finish(true);
+    }
     else if (!findAnyMove()) { setStatus('没有可连组合，自动洗牌！'); shuffleRemaining(false); }
   }, 300);
+}
+
+function showMemeBurst(tile) {
+  const burst = $('#memeBurst');
+  $('#memeBurstImage').src = tile.photo.url;
+  $('#memeBurstCaption').textContent = tile.caption;
+  $('#memePower').textContent = tile.power === 'time' ? '+3 SEC!' : tile.power === 'bomb' ? 'BOOM!' : state.combo >= 3 ? `${state.combo} COMBO!` : 'MEME!';
+  burst.hidden = false;
+  clearTimeout(showMemeBurst.timer);
+  showMemeBurst.timer = setTimeout(() => { burst.hidden = true; }, 560);
+}
+
+function blastOnePair() {
+  const move = findAnyMove();
+  if (!move) return;
+  state.board[move.first.row][move.first.col] = null;
+  state.board[move.second.row][move.second.col] = null;
+  state.remainingPairs -= 1; state.matchedPairs += 1; state.score += 180;
+  showToast('炸掉一对！');
 }
 
 function wrongPair(firstElement, secondElement, text) {
@@ -248,7 +288,7 @@ function clearPath() { $('#linkLayer').replaceChildren(); }
 function updateHud() {
   $('#scoreValue').textContent = String(state.score).padStart(4,'0');
   $('#comboValue').textContent = `×${Math.max(1,state.combo)}`;
-  $('#remainingValue').textContent = `剩余 ${state.remainingPairs} 对`;
+  $('#remainingValue').textContent = `第 ${state.round + 1}/3 轮 · 剩余 ${state.remainingPairs} 对`;
   $('#hintCount').textContent = `${state.hints} 次`;
   $('#shuffleCount').textContent = `${state.shuffles} 次`;
   $('#hintButton').disabled = state.hints <= 0;
@@ -281,7 +321,7 @@ function finish(cleared) {
   $('#resultEmoji').textContent = cleared ? (state.maxCombo >= 6 ? '👑' : '🏆') : '⏰';
   $('#resultTitle').textContent = cleared ? (state.maxCombo >= 6 ? '连连看之神！' : '整活成功！') : '差点就连完！';
   $('#resultScore').textContent = String(state.score).padStart(4,'0');
-  $('#resultDetail').textContent = `${18-state.remainingPairs} 对已消除 · 最高连击 ×${Math.max(1,state.maxCombo)}${cleared ? ` · 时间奖励 ${timeBonus}` : ''}`;
+  $('#resultDetail').textContent = `${state.matchedPairs} 对已消除 · 最高连击 ×${Math.max(1,state.maxCombo)}${cleared ? ` · 时间奖励 ${timeBonus}` : ''}`;
   $('#resultFaces').innerHTML = photos().slice(0,5).map((photo)=>`<img src="${photo.url}" alt="${photo.name}">`).join('');
   setTimeout(()=>showScreen('resultScreen'),450);
 }

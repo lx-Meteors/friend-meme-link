@@ -14,7 +14,7 @@
       <div class="hero-copy">
         <span class="burst">限时！</span>
         <h1><em>朋友</em><br>表情包<br><strong>连连看</strong></h1>
-        <p>把朋友做成梗图，找到相同表情包，用不超过两次转弯的路线消除。</p>
+        <p>45 秒闯过三轮表情包派对。配对成功就放大朋友丑照，还会触发炸弹和时间奖励。</p>
       </div>
 
       <div class="photo-panel">
@@ -27,7 +27,7 @@
       <div class="rule-strip">
         <span><b>01</b> 相同梗图</span>
         <span><b>02</b> 最多两拐</span>
-        <span><b>03</b> 全部消除</span>
+        <span><b>03</b> 三轮整活</span>
       </div>
       <button id="startButton" class="big-button" type="button">开始整活 <span>→</span></button>
     </section>
@@ -37,15 +37,16 @@
         <button id="backButton" class="round-button" type="button" aria-label="返回">←</button>
         <div class="score-block"><small>SCORE</small><b id="scoreValue">0000</b></div>
         <div class="combo-block"><small>COMBO</small><b id="comboValue">×1</b></div>
-        <div class="time-block"><small>TIME</small><b id="timeValue">75</b></div>
+        <div class="time-block"><small>TIME</small><b id="timeValue">45</b></div>
       </header>
       <div class="timer"><span id="timerFill"></span></div>
-      <div class="mission-line"><span id="remainingValue">剩余 18 对</span><strong id="statusText">找出两个相同梗图！</strong></div>
+      <div class="mission-line"><span id="remainingValue">第 1/3 轮 · 剩余 8 对</span><strong id="statusText">找出两个相同梗图！</strong></div>
 
       <div id="boardWrap" class="board-wrap">
         <div id="board" class="board" aria-label="连连看棋盘"></div>
         <svg id="linkLayer" class="link-layer" aria-hidden="true"></svg>
         <div id="toast" class="toast">连上啦！</div>
+        <div id="memeBurst" class="meme-burst" hidden><span id="memePower">BOOM!</span><img id="memeBurstImage" alt="配对成功的朋友表情包"><strong id="memeBurstCaption">我裂开了</strong></div>
       </div>
 
       <div class="tools">
@@ -64,7 +65,7 @@
         <h2 id="resultTitle">整活大师！</h2>
         <div id="resultFaces" class="result-faces"></div>
         <strong id="resultScore">0000</strong>
-        <p id="resultDetail">18 对全部消除 · 最高连击 ×1</p>
+        <p id="resultDetail">33 对全部消除 · 最高连击 ×1</p>
       </div>
       <button id="againButton" class="big-button dark" type="button">再整一次 <span>↻</span></button>
       <button id="homeButton" class="text-button" type="button">重新选择照片</button>
