@@ -48,12 +48,21 @@ function shuffle(array) {
 
 function buildTiles(pairCount) {
   const pool = photos();
-  const selectedCaptions = shuffle([...captions]).slice(0,pairCount);
-  const pairs = selectedCaptions.map((caption, index) => ({
-    key:`round-${state.round}-meme-${index}`, caption, photo:pool[(index + state.round) % pool.length], hue:(index * 47 + state.round * 35) % 360,
-    power:index === 1 ? 'time' : index === Math.floor(pairCount * .65) ? 'bomb' : null
+  const typeCount = Math.min(pool.length,pairCount);
+  const selectedCaptions = shuffle([...captions]).slice(0,typeCount);
+  const types = Array.from({length:typeCount},(_,index) => ({
+    key:`round-${state.round}-photo-${index}`,
+    caption:selectedCaptions[index],
+    photo:pool[index],
+    hue:(index * 83 + state.round * 35) % 360,
+    power:index === 1 ? 'time' : index === typeCount - 1 && typeCount > 2 ? 'bomb' : null
   }));
-  return shuffle(pairs.flatMap((pair) => [{...pair,uid:`${pair.key}-a`},{...pair,uid:`${pair.key}-b`} ]));
+  const tiles = [];
+  for (let pairIndex = 0; pairIndex < pairCount; pairIndex += 1) {
+    const type = types[pairIndex % typeCount];
+    tiles.push({...type,uid:`${type.key}-${pairIndex}-a`},{...type,uid:`${type.key}-${pairIndex}-b`});
+  }
+  return shuffle(tiles);
 }
 
 function resetGame() {
