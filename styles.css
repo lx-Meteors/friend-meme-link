@@ -109,33 +109,54 @@ body{background-color:#6fdbff;background-image:radial-gradient(circle,#191522 0 
 /* Phone layout correction — keep the collage energy without covering the content */
 .intro-screen.active{
   display:grid;
-  grid-template-rows:auto auto minmax(76px,1fr) auto auto auto;
+  grid-template-rows:auto auto minmax(94px,1fr) auto auto;
   align-content:stretch;
-  gap:7px;
+  gap:9px;
 }
 .intro-screen .top-stamp,.intro-screen .hero-copy,.intro-screen .cover-faces,
-.intro-screen .photo-panel,.intro-screen .rule-strip,.intro-screen .big-button{min-width:0;margin-top:0}
+.intro-screen .photo-panel,.intro-screen .big-button{min-width:0;margin-top:0}
 .hero-copy{align-self:start}
-.hero-copy>p{margin:12px 0 0}
+.hero-copy>p{width:max-content;max-width:86%;margin:12px 0 0;padding:5px 9px;border:2px solid var(--ink);border-left:6px solid var(--orange);background:white;box-shadow:3px 3px 0 var(--ink);font-size:10px;line-height:1.25;transform:rotate(-1deg)}
 .cover-faces{
   position:relative!important;
   top:auto!important;
   left:auto!important;
   width:100%!important;
   height:100%!important;
-  min-height:76px;
+  min-height:94px;
   margin:0!important;
-  padding:3px 8px 5px;
+  padding:24px 13px 12px;
   display:flex;
   align-items:center;
   justify-content:center;
+  border:3px solid var(--ink);
+  border-radius:4px 18px 5px 13px;
+  outline:4px solid white;
+  background-color:#ffc5dc;
+  background-image:radial-gradient(circle,#fff9 0 2px,transparent 2.5px);
+  background-size:17px 17px;
+  box-shadow:7px 8px 0 var(--ink);
+  transform:rotate(.6deg);
   pointer-events:none;
+}
+.cover-faces::before{
+  position:absolute;
+  top:-7px;
+  left:12px;
+  content:'今日主角  /  FRIENDS';
+  padding:4px 8px;
+  border:2px solid var(--ink);
+  color:white;
+  background:var(--ink);
+  font:950 8px/1 monospace;
+  letter-spacing:.08em;
+  transform:rotate(-2deg);
 }
 .cover-faces::after{
   position:absolute;
-  right:4%;
-  bottom:0;
-  content:'↑ 本场倒霉蛋';
+  right:9px;
+  bottom:-7px;
+  content:'照片已就位 ✓';
   padding:3px 6px;
   border:2px solid var(--ink);
   background:var(--yellow);
@@ -144,19 +165,19 @@ body{background-color:#6fdbff;background-image:radial-gradient(circle,#191522 0 
   transform:rotate(5deg);
 }
 .cover-faces img{
-  width:clamp(58px,17vw,88px)!important;
-  height:clamp(58px,17vw,88px)!important;
-  margin-left:-13px!important;
+  width:clamp(61px,18vw,92px)!important;
+  height:clamp(61px,18vw,92px)!important;
+  margin-left:-11px!important;
   border:4px solid white!important;
   outline:2px solid var(--ink)!important;
   border-radius:4px 20px 6px 15px!important;
   box-shadow:4px 5px 0 var(--ink)!important;
 }
 .cover-faces img:first-child{margin-left:0!important}
-.cover-faces img:nth-child(3n){transform:rotate(-7deg) translateY(7px)!important}
-.cover-faces img:nth-child(even){transform:rotate(6deg) translateY(-5px)!important}
-.photo-panel{align-self:end;padding:8px 10px!important}
-.rule-strip{align-self:end}
+.cover-faces img:nth-child(3n){transform:rotate(-6deg) translateY(5px)!important}
+.cover-faces img:nth-child(even){transform:rotate(5deg) translateY(-4px)!important}
+.photo-panel{align-self:end;padding:8px 10px!important;border-width:3px;box-shadow:5px 6px 0 var(--ink)}
+.photo-panel::before{width:56px;height:14px;top:-8px;left:calc(50% - 28px)}
 .big-button{align-self:end}
 
 .game-header{height:31px;grid-template-columns:31px minmax(0,1fr) 84px;gap:6px}
@@ -177,14 +198,13 @@ body{background-color:#6fdbff;background-image:radial-gradient(circle,#191522 0 
 
 @media(max-width:380px){
   .screen{padding:12px 13px}
-  .intro-screen.active{gap:5px;grid-template-rows:auto auto minmax(64px,1fr) auto auto auto}
+  .intro-screen.active{gap:7px;grid-template-rows:auto auto minmax(78px,1fr) auto auto}
   .hero-copy h1{font-size:clamp(36px,12vw,44px)}
-  .hero-copy>p{margin-top:8px;font-size:9px;line-height:1.3}.hero-copy>p b{font-size:11px}
+  .hero-copy>p{margin-top:8px;padding:4px 7px;font-size:8px;line-height:1.2}.hero-copy>p b{font-size:10px}
   .burst{width:55px;height:55px;font-size:10px}.scribble{display:none}
-  .cover-faces{min-height:64px;padding-block:1px}
-  .cover-faces img{width:clamp(49px,16vw,65px)!important;height:clamp(49px,16vw,65px)!important;margin-left:-10px!important}
+  .cover-faces{min-height:78px;padding:18px 8px 8px}
+  .cover-faces img{width:clamp(49px,16vw,65px)!important;height:clamp(49px,16vw,65px)!important;margin-left:-8px!important}
   .photo-panel{padding:6px 8px!important}.upload-button{height:31px;font-size:9px}.photo-panel small{margin-top:4px;font-size:7px}
-  .rule-strip{gap:4px}.rule-strip span{padding:3px 1px;font-size:8px}.rule-strip b{font-size:10px}
   .big-button{height:40px;margin-top:0;font-size:15px}
   .game-screen{padding:11px 12px 13px}
   .board-wrap{padding:8px}.board{gap:5px}
@@ -192,12 +212,12 @@ body{background-color:#6fdbff;background-image:radial-gradient(circle,#191522 0 
 }
 
 @media(max-height:650px){
-  .intro-screen.active{gap:4px;grid-template-rows:auto auto minmax(48px,1fr) auto auto auto}
+  .intro-screen.active{gap:5px;grid-template-rows:auto auto minmax(62px,1fr) auto auto}
   .hero-copy h1{font-size:35px}.hero-copy>p{margin-top:6px;font-size:8px}.hero-copy>p b{font-size:10px}
-  .cover-faces{min-height:48px;padding:0}.cover-faces img{width:46px!important;height:46px!important;margin-left:-8px!important}
+  .cover-faces{min-height:72px;padding:17px 8px 7px}.cover-faces img{width:62px!important;height:62px!important;margin-left:-9px!important}
   .cover-faces::after{font-size:6px;padding:2px 4px}
   .photo-panel{padding:5px 8px!important}.upload-button{height:28px}.photo-panel small{margin-top:3px;font-size:6px}
-  .rule-strip{margin-top:0}.rule-strip span{padding:2px}.big-button{height:35px;margin-top:0}
+  .big-button{height:35px;margin-top:0}
   .game-header{height:29px}.timer{margin-block:3px}.mission-line{height:22px}
   .board-wrap{padding:7px}.tools{height:35px;margin-top:5px}
 }
