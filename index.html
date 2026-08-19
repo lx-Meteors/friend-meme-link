@@ -18,8 +18,9 @@
         <p><b>45 秒，三轮。</b>认准同一张脸，连上就公开处刑。</p>
       </div>
 
+      <div id="photoPreview" class="photo-preview cover-faces"></div>
+
       <div class="photo-panel">
-        <div id="photoPreview" class="photo-preview"></div>
         <label class="upload-button" for="photoInput"><b>＋</b> 把 2–8 个朋友丢进来</label>
         <input id="photoInput" type="file" accept="image/*" multiple hidden>
         <small><i></i>照片只在当前浏览器本地处理</small>
@@ -37,7 +38,6 @@
       <header class="game-header">
         <button id="backButton" class="round-button" type="button" aria-label="返回">←</button>
         <div class="score-block"><small>整活分</small><b id="scoreValue">0000</b></div>
-        <div class="combo-block"><small>手感</small><b id="comboValue">×1</b></div>
         <div class="time-block"><small>还剩</small><b id="timeValue">45</b><i>秒</i></div>
       </header>
       <div class="timer"><span id="timerFill"></span></div>
@@ -67,7 +67,7 @@
         <h2 id="resultTitle">整活大师！</h2>
         <div id="resultFaces" class="result-faces"></div>
         <div class="result-score-wrap"><small>整活指数</small><strong id="resultScore">0000</strong><i>PTS</i></div>
-        <p id="resultDetail">33 对全部消除 · 最高连击 ×1</p>
+        <p id="resultDetail">30 对全部消除 · 最高连击 ×1</p>
       </div>
       <button id="againButton" class="big-button dark" type="button"><i>ONE MORE!</i> 再整一次 <span>↻</span></button>
       <button id="homeButton" class="text-button" type="button">换一批朋友继续祸害</button>

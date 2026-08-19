@@ -105,3 +105,99 @@ body{background-color:#6fdbff;background-image:radial-gradient(circle,#191522 0 
 
 @media(max-height:650px){.screen{padding:10px 13px}.hero-copy h1{font-size:38px}.hero-copy>p{margin-top:10px}.photo-panel{padding:6px 9px}.photo-preview{height:43px}.photo-preview img{width:40px;height:40px}.rule-strip{margin-top:7px}.big-button{height:40px;margin-top:7px}.game-header{height:36px}.board-wrap{padding:10px}.board{gap:5px}.tools{height:47px;margin-top:8px}.result-card{padding:16px}.result-emoji{font-size:45px}.result-card h2{font-size:34px}.result-faces{height:50px}.result-faces img{width:44px;height:44px}.result-score-wrap strong{font-size:40px}}
 @media(max-height:650px){.photo-panel .photo-preview{top:-135px;height:124px}.photo-panel .photo-preview img{width:70px;height:70px}.scribble{display:none}}
+
+/* Phone layout correction — keep the collage energy without covering the content */
+.intro-screen.active{
+  display:grid;
+  grid-template-rows:auto auto minmax(76px,1fr) auto auto auto;
+  align-content:stretch;
+  gap:7px;
+}
+.intro-screen .top-stamp,.intro-screen .hero-copy,.intro-screen .cover-faces,
+.intro-screen .photo-panel,.intro-screen .rule-strip,.intro-screen .big-button{min-width:0;margin-top:0}
+.hero-copy{align-self:start}
+.hero-copy>p{margin:12px 0 0}
+.cover-faces{
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:76px;
+  margin:0!important;
+  padding:3px 8px 5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.cover-faces::after{
+  position:absolute;
+  right:4%;
+  bottom:0;
+  content:'↑ 本场倒霉蛋';
+  padding:3px 6px;
+  border:2px solid var(--ink);
+  background:var(--yellow);
+  font-size:8px;
+  font-weight:950;
+  transform:rotate(5deg);
+}
+.cover-faces img{
+  width:clamp(58px,17vw,88px)!important;
+  height:clamp(58px,17vw,88px)!important;
+  margin-left:-13px!important;
+  border:4px solid white!important;
+  outline:2px solid var(--ink)!important;
+  border-radius:4px 20px 6px 15px!important;
+  box-shadow:4px 5px 0 var(--ink)!important;
+}
+.cover-faces img:first-child{margin-left:0!important}
+.cover-faces img:nth-child(3n){transform:rotate(-7deg) translateY(7px)!important}
+.cover-faces img:nth-child(even){transform:rotate(6deg) translateY(-5px)!important}
+.photo-panel{align-self:end;padding:8px 10px!important}
+.rule-strip{align-self:end}
+.big-button{align-self:end}
+
+.game-header{height:31px;grid-template-columns:31px minmax(0,1fr) 84px;gap:6px}
+.round-button{width:28px;height:28px;font-size:14px}
+.game-header>div{min-height:27px;padding:1px 5px 0}
+.game-header .score-block{background:white!important;transform:rotate(-1deg)!important}
+.game-header .time-block{background:var(--yellow)!important;transform:rotate(1deg)!important}
+.game-header small{font-size:6px}.game-header b{margin-top:1px;font-size:14px}
+.time-block{padding-right:13px!important}.time-block i{right:4px;bottom:4px;font-size:6px}
+.timer{height:8px;margin:5px 2px 4px;border-width:2px}
+.mission-line{height:25px}.mission-line span{padding:3px 5px;font-size:8px}.mission-line strong{padding:2px 5px;font-size:8px}
+.board-wrap{padding:11px}
+.board{gap:7px}
+.tile span{padding:2px 1px;border-top-width:1px;font-size:clamp(6px,1.05vw,8px);line-height:1}
+.tools{height:41px;gap:5px;margin-top:7px}
+.tools button{grid-template-columns:20px 1fr;padding:2px 4px;border-width:2px;box-shadow:3px 3px 0 var(--ink)}
+.tools button>span{font-size:14px}.tools b{font-size:8px;line-height:1}.tools small{font-size:6px;line-height:1}
+
+@media(max-width:380px){
+  .screen{padding:12px 13px}
+  .intro-screen.active{gap:5px;grid-template-rows:auto auto minmax(64px,1fr) auto auto auto}
+  .hero-copy h1{font-size:clamp(36px,12vw,44px)}
+  .hero-copy>p{margin-top:8px;font-size:9px;line-height:1.3}.hero-copy>p b{font-size:11px}
+  .burst{width:55px;height:55px;font-size:10px}.scribble{display:none}
+  .cover-faces{min-height:64px;padding-block:1px}
+  .cover-faces img{width:clamp(49px,16vw,65px)!important;height:clamp(49px,16vw,65px)!important;margin-left:-10px!important}
+  .photo-panel{padding:6px 8px!important}.upload-button{height:31px;font-size:9px}.photo-panel small{margin-top:4px;font-size:7px}
+  .rule-strip{gap:4px}.rule-strip span{padding:3px 1px;font-size:8px}.rule-strip b{font-size:10px}
+  .big-button{height:40px;margin-top:0;font-size:15px}
+  .game-screen{padding:11px 12px 13px}
+  .board-wrap{padding:8px}.board{gap:5px}
+  .tools{height:38px;margin-top:6px}.tools button{grid-template-columns:17px 1fr;padding:1px 2px}.tools button>span{font-size:12px}.tools b{font-size:7px}.tools small{font-size:5px}
+}
+
+@media(max-height:650px){
+  .intro-screen.active{gap:4px;grid-template-rows:auto auto minmax(48px,1fr) auto auto auto}
+  .hero-copy h1{font-size:35px}.hero-copy>p{margin-top:6px;font-size:8px}.hero-copy>p b{font-size:10px}
+  .cover-faces{min-height:48px;padding:0}.cover-faces img{width:46px!important;height:46px!important;margin-left:-8px!important}
+  .cover-faces::after{font-size:6px;padding:2px 4px}
+  .photo-panel{padding:5px 8px!important}.upload-button{height:28px}.photo-panel small{margin-top:3px;font-size:6px}
+  .rule-strip{margin-top:0}.rule-strip span{padding:2px}.big-button{height:35px;margin-top:0}
+  .game-header{height:29px}.timer{margin-block:3px}.mission-line{height:22px}
+  .board-wrap{padding:7px}.tools{height:35px;margin-top:5px}
+}

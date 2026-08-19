@@ -2,7 +2,7 @@ const $ = (selector) => document.querySelector(selector);
 let ROWS = 4;
 let COLS = 4;
 const TOTAL_SECONDS = 45;
-const rounds = [{rows:4,cols:4,pairs:8},{rows:4,cols:5,pairs:10},{rows:5,cols:6,pairs:15}];
+const rounds = [{rows:4,cols:4,pairs:8},{rows:5,cols:4,pairs:10},{rows:6,cols:4,pairs:12}];
 const captions = ['我裂开了','你礼貌吗','让我康康','就这？','退退退！','拿来吧你','栓Q了','尊嘟假嘟','别卷了','已老实','好好好','我不理解','笑不活了','危！','开摆！','听我解释','问题不大','人麻了'];
 
 const state = {
@@ -82,7 +82,7 @@ function buildRound() {
   ensureMove();
   renderBoard(); updateHud();
   $('#board').classList.remove('round-in'); void $('#board').offsetWidth; $('#board').classList.add('round-in');
-  setStatus(state.round === 0 ? '热身局：先找相邻的！' : state.round === 1 ? '加速局：棋盘变宽了！' : '最终局：表情包大爆发！');
+  setStatus(state.round === 0 ? '热身局：先找相邻的！' : state.round === 1 ? '加速局：棋盘变长了！' : '最终局：表情包大爆发！');
   showToast(`第 ${state.round + 1} 轮！`);
 }
 
@@ -296,7 +296,6 @@ function clearPath() { $('#linkLayer').replaceChildren(); }
 
 function updateHud() {
   $('#scoreValue').textContent = String(state.score).padStart(4,'0');
-  $('#comboValue').textContent = `×${Math.max(1,state.combo)}`;
   $('#remainingValue').textContent = `第 ${state.round + 1}/3 轮 · 剩余 ${state.remainingPairs} 对`;
   $('#hintCount').textContent = `剩 ${state.hints} 次`;
   $('#shuffleCount').textContent = `剩 ${state.shuffles} 次`;
